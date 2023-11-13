@@ -1,0 +1,33 @@
+.navbar {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .greeting {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        gap: 20px;
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+
+    .feelHappy {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        gap: 20px;
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+}

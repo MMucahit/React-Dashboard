@@ -1,0 +1,24 @@
+.sortPoint {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    .svg {
+        margin-left: 30px;
+        img {
+            height: 35px;
+            width: 35px;
+        }
+    }
+    .title {
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+    }
+    .sorted {
+        font-size: xx-large;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+    }
+}

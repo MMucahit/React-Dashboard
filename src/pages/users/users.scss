@@ -1,0 +1,21 @@
+.users {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    .dataGrid {
+        flex-grow: 1;
+    }
+
+    .dataFilter {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .css-1jy569b-MuiFormLabel-root-MuiInputLabel-root {
+            font-weight: bold;
+            color: white;
+        }
+    }
+}
