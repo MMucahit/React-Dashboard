@@ -4,6 +4,7 @@ import {
   RouterProvider,
   Outlet,
   Navigate,
+  Route,
 } from "react-router-dom";
 
 // Pages
@@ -15,7 +16,7 @@ import Favorites from "./pages/favorites/Favorites";
 import User from "./pages/user/User";
 import Office from "./pages/office/Office";
 
-// Companents
+// Components
 import Navbar from "./companents/navbar/Navbar";
 import Footer from "./companents/footer/Footer";
 import Menu from "./companents/menu/Menu";
@@ -23,13 +24,18 @@ import Menu from "./companents/menu/Menu";
 // CSS
 import "./styles/global.scss";
 
+// Custom PrivateRoute Component
+const PrivateRoute = ({ element, ...rest }) => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn"); // Check if user is logged in
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" replace={true} />;
+  }
+
+  return <Route {...rest} element={element} />;
+};
+
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
-
-  const PrivateRoute = ({ element, ...rest }) => {
-    return isLoggedIn ? element : <Navigate to="/login" replace />;
-  };
-
   const Layout = () => {
     return (
       <div className="main">
@@ -54,13 +60,17 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
-        { path: "/", element: <PrivateRoute element={<Home />} /> },
+        { path: "/", element: <Home /> },
+
+        // Use PrivateRoute for protected routes
         { path: "/offices", element: <PrivateRoute element={<Products />} /> },
         { path: "/users", element: <PrivateRoute element={<Users />} /> },
         {
           path: "/favorites",
           element: <PrivateRoute element={<Favorites />} />,
         },
+
+        // Use PrivateRoute with parameter for protected routes
         { path: "/users/:id", element: <PrivateRoute element={<User />} /> },
         {
           path: "/offices/:id",
@@ -68,10 +78,7 @@ function App() {
         },
       ],
     },
-    {
-      path: "/login",
-      element: <Login setLoggedIn={setLoggedIn} isLoggedIn={isLoggedIn} />,
-    },
+    { path: "/login", element: <Login /> },
   ]);
 
   return <RouterProvider router={router} />;

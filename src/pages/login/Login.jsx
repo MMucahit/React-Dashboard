@@ -1,10 +1,10 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 
 // CSS
 import "./login.scss";
 
-function Login() {
-  return <div className="login">Login</div>;
+function Login(props) {
+  return props.isLoggedIn ? <Navigate to="/" replace /> : <div>Login</div>;
 }
-
 export default Login;

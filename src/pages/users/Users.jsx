@@ -1,59 +1,54 @@
 import React, { useState } from "react";
 
 // Companents
-import DataTable from "../../companents/dataTable/DataTable";
+import UserDataTable from "../../companents/usersDataTable/UserDataTable.jsx";
 import SelectBox from "../../companents/SelectBox/SelectBox";
-
-// Columns
-import { user_columns } from "../../data";
 
 // Filter
 import { user_filter } from "../../data";
+
+// Columns
+import { user_columns } from "../../data";
 
 // CSS
 import "./users.scss";
 
 function Users() {
-  const [activePointFilterValue, setActivePointFilterValue] = useState("None");
-  const [gainPointFilterValue, setGainPointFilterValue] = useState("None");
+  const [activePointFilterValue, setActivePointFilterValue] = useState("");
+  const [gainPointFilterValue, setGainPointFilterValue] = useState("");
 
   return (
     <div className="users">
       <div className="dataGrid">
-        <DataTable
+        <UserDataTable
+          slug="users"
+          columns={user_columns}
+          filter={user_filter}
           filterData={{
             activePoint: activePointFilterValue,
             gainPoint: gainPointFilterValue,
           }}
-          columns={user_columns}
-          filter={user_filter}
         />
       </div>
       <div className="dataFilter">
-        <h2>Filter by Active Point</h2>
         <SelectBox
           filterValue={activePointFilterValue}
           setFilterValue={setActivePointFilterValue}
           filterData={[
-            { data: "None" },
             { data: "A" },
             { data: "B" },
             { data: "C" },
             { data: "D" },
             { data: "E" },
           ]}
+          label={"Search Active Point"}
           name={"activePoint"}
         />
-        <h2>Filter by Gain Point</h2>
         <SelectBox
           filterValue={gainPointFilterValue}
           setFilterValue={setGainPointFilterValue}
-          filterData={[
-            { data: "None" },
-            { data: "A" },
-            { data: "B" },
-            { data: "C" },
-          ]}
+          filterData={[{ data: "A" }, { data: "B" }, { data: "C" }]}
+          label={"Search Gain Point"}
           name={"gainPoint"}
         />
       </div>

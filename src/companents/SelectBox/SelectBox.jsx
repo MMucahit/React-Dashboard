@@ -1,7 +1,7 @@
 import React from "react";
 
 // MUI
-import { Box, FormControl, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 // CSS
 import "./selectBox.scss";
@@ -15,13 +15,16 @@ function SelectBox(props) {
     <div className="selectBox">
       <Box sx={{ minWidth: 250 }}>
         <FormControl fullWidth name={"form-control"}>
+          <InputLabel id="demo-simple-select-label">{props.label}</InputLabel>
           <Select
             name={props.name}
-            defaultValue="None"
             labelId={props.id}
-            value={props.activePointFilterValue}
+            value={props.filterValue}
             onChange={handleChange}
           >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
             {props.filterData.map((d, index) => (
               <MenuItem key={index} value={d.data}>
                 {d.data}

@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
 // CSS
-import "./dataTable.scss";
+import "./officeDataTable.scss";
 
-function DataTable(props) {
+function OfficeDataTable(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [row, setRow] = useState([]);
   const [totalRow, setTotalRow] = useState(0);
@@ -26,22 +26,13 @@ function DataTable(props) {
     fetchData();
   }, [page, pageSize, props]);
 
-  const actionColumn = {
-    field: "action",
-    headerName: "Action",
-    width: 200,
-    renderCell: (params) => {
-      return props.filter_function(props, params);
-    },
-  };
-
   return (
     <div className="dataTable">
       <DataGrid
         loading={isLoading}
         className="dataGrid"
         rows={row}
-        columns={[...props.columns, actionColumn]}
+        columns={props.columns}
         rowCount={totalRow}
         paginationMode="server"
         initialState={{
@@ -73,4 +64,4 @@ function DataTable(props) {
   );
 }
 
-export default DataTable;
+export default OfficeDataTable;

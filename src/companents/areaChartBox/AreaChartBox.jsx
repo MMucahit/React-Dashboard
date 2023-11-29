@@ -37,7 +37,7 @@ function AreaChartBox(props) {
               <Tooltip
                 contentStyle={{ background: "transparent", border: "none" }}
                 labelStyle={{ display: "none" }}
-                position={{ x: 300, y: -80 }}
+                position={props.position}
               />
               {props.dataKeyColor.map((dK, index) => (
                 <Area

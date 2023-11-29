@@ -31,18 +31,6 @@ export const user_columns = [
   },
 ];
 
-export const user_filter = (props, page, pageSize) => {
-  return `http://127.0.0.1:8000/datas?active_point=${
-    props?.filterData.activePoint
-  }&gain_point=${props?.filterData.gainPoint}&page=${
-    page + 1
-  }&size=${pageSize}`;
-};
-
-export const office_filter = (props, page, pageSize) => {
-  return `http://127.0.0.1:8000/offices?page=${page + 1}&size=${pageSize}`;
-};
-
 export const office_columns = [
   {
     field: "id",
@@ -81,8 +69,64 @@ export const office_columns = [
   },
 ];
 
+export const history_columns = [
+  {
+    field: "id",
+    headerName: "Id",
+    width: 110,
+  },
+  {
+    field: "employee_id",
+    headerName: "Employee Id",
+    width: 110,
+  },
+  {
+    field: "saved_date",
+    headerName: "Kayıt Tarihi",
+    width: 180,
+  },
+  {
+    field: "active_point",
+    headerName: "Aktiflik Puanı",
+    width: 150,
+  },
+  {
+    field: "gain_point",
+    headerName: "Kazanç Puanı",
+    width: 150,
+  },
+  {
+    field: "predictions",
+    headerName: "Tahmin",
+    width: 150,
+  },
+];
+
+export const history_filter = (props, page, pageSize) => {
+  return `http://127.0.0.1:8000/data_history`;
+};
+
+export const user_filter = (props, page, pageSize) => {
+  return `http://127.0.0.1:8000/datas?active_point=${
+    props?.filterData.activePoint
+  }&gain_point=${props?.filterData.gainPoint}&page=${
+    page + 1
+  }&size=${pageSize}`;
+};
+
+export const office_filter = (props, page, pageSize) => {
+  return `http://127.0.0.1:8000/offices?office_name=${props?.filterData.map(
+    (office) => office.office_name
+  )}&page=${page + 1}&size=${pageSize}`;
+};
+
+export const office_filter_without_paginate = () => {
+  return "http://127.0.0.1:8000/get_office_without_pagination";
+};
+
 export const areaChartPointdata = {
   title: "A - B - C - D - E",
+  position: { x: 720, y: -80 },
   dataKeyColor: [
     { color: "#45FFCA", key: "A" },
     { color: "#FEFFAC", key: "B" },
@@ -107,11 +151,20 @@ export const areaChartPointdata = {
       D: 1337,
       E: 1970,
     },
+    {
+      name: "2023-19-11",
+      A: 2556,
+      B: 1218,
+      C: 970,
+      D: 1089,
+      E: 2615,
+    },
   ],
 };
 
 export const areaChartGaindata = {
   title: "A - B - C",
+  position: { x: 310, y: -80 },
   dataKeyColor: [
     { color: "#7743DB", key: "A" },
     { color: "#D67BFF", key: "B" },
@@ -130,6 +183,12 @@ export const areaChartGaindata = {
       B: 1643,
       C: 1273,
     },
+    {
+      name: "2023-19-11",
+      A: 1538,
+      B: 2003,
+      C: 645,
+    },
   ],
 };
 
@@ -137,12 +196,13 @@ export const chartBoxDE = {
   color: "teal",
   icon: "/revenueIcon.svg",
   title: "Toplam D-E Kullanıcı Sayısı",
-  number: 3307,
+  number: 3704,
   dataKey: "value",
-  percentage: (((3307 - 3539) / 3539) * 100).toPrecision(2),
+  percentage: (((3704 - 3307) / 3307) * 100).toPrecision(2),
   chartData: [
     { name: "2023-05-11", value: 3539 },
     { name: "2023-12-11", value: 3307 },
+    { name: "2023-19-11", value: 3704 },
   ],
 };
 
@@ -150,12 +210,13 @@ export const chartBoxABC = {
   color: "gold",
   icon: "/conversionIcon.svg",
   title: "Toplam A-B-C Kullanıcı Sayısı",
-  number: 4847,
+  number: 4744,
   dataKey: "value",
-  percentage: (((4847 - 4615) / 4615) * 100).toPrecision(2),
+  percentage: (((4744 - 4847) / 4847) * 100).toPrecision(2),
   chartData: [
     { name: "Sun", value: 4615 },
     { name: "Mon", value: 4847 },
+    { name: "Mon", value: 4744 },
   ],
 };
 
