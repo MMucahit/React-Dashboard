@@ -114,6 +114,12 @@ export const user_filter = (props, page, pageSize) => {
   }&size=${pageSize}`;
 };
 
+export const office_user_filter = (props, page, pageSize) => {
+  return `http://127.0.0.1:8000/get_by_employee_office/${
+    props?.filterData.office_name
+  }?page=${page + 1}&size=${pageSize}`;
+};
+
 export const office_filter = (props, page, pageSize) => {
   return `http://127.0.0.1:8000/offices?office_name=${props?.filterData.map(
     (office) => office.office_name

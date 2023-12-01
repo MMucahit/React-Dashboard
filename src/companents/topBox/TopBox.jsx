@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 // CSS
 import "./topBox.scss";
+import { Link } from "react-router-dom";
 
 function TopBox() {
   const [data, setData] = useState([]);
@@ -23,7 +24,9 @@ function TopBox() {
         {data.map((user) => (
           <div className="listItem" key={user.id}>
             <div className="user">
-              <img src="user.svg" alt=""></img>
+              <Link to={`/users/${user.employee_id}`}>
+                <img src="user.svg" alt=""></img>
+              </Link>
               <div className="userText">
                 <span className="user_name">{user.name_surname}</span>
                 <span className="office_name">{user.office_name}</span>

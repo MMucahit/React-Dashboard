@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // MUI Data Grid
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -26,13 +27,34 @@ function OfficeDataTable(props) {
     fetchData();
   }, [page, pageSize, props]);
 
+  const actionColumn = {
+    field: "action",
+    headerName: "Action",
+    width: 150,
+    renderCell: (params) => {
+      return (
+        <div className="action">
+          <Link to={`/${props.slug}/${params.row.office_name}`}>
+            <img src="/view.svg" alt=""></img>
+          </Link>
+        </div>
+      );
+    },
+  };
+
   return (
     <div className="dataTable">
       <DataGrid
+        sx={{
+          "& .css-t89xny-MuiDataGrid-columnHeaderTitle": {
+            fontSize: "larger",
+            color: "black",
+          },
+        }}
         loading={isLoading}
         className="dataGrid"
         rows={row}
-        columns={props.columns}
+        columns={[...props.columns, actionColumn]}
         rowCount={totalRow}
         paginationMode="server"
         initialState={{
