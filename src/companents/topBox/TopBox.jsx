@@ -1,41 +1,63 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 // CSS
 import "./topBox.scss";
-import { Link } from "react-router-dom";
+
+// Cookie
+import { useCookies } from "react-cookie";
 
 function TopBox() {
   const [data, setData] = useState([]);
 
+  const [cookie] = useCookies(["Token"]);
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("http://127.0.0.1:8000/get_random_seven");
-      const json = await response.json();
+      try {
+        const response = await fetch(
+          "https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/get_random_seven",
+          {
+            headers: {
+              Authorization: "Bearer ".concat(cookie.Token.access_token),
+            },
+          }
+        );
+        const json = await response.json();
 
-      setData(json);
+        setData(json);
+      } catch (error) {
+        setData(false);
+      }
     };
     fetchData();
   }, []);
 
   return (
     <div className="topBox">
-      <h2>Ayrılma İhtimali Olanlar</h2>
-      <div className="list">
-        {data.map((user) => (
-          <div className="listItem" key={user.id}>
-            <div className="user">
-              <Link to={`/users/${user.employee_id}`}>
-                <img src="user.svg" alt=""></img>
-              </Link>
-              <div className="userText">
-                <span className="user_name">{user.name_surname}</span>
-                <span className="office_name">{user.office_name}</span>
+      {!data ? (
+        <h2 className="flex justify-center">Something Wrong!</h2>
+      ) : (
+        <div>
+          <h2>Ayrılma İhtimali Olanlar</h2>
+          <div className="list">
+            {data.map((user) => (
+              <div className="listItem" key={user.id}>
+                <div className="user">
+                  <Link to={`/users/${user.employee_id}`}>
+                    <img src="user.svg" alt=""></img>
+                  </Link>
+                  <div className="userText">
+                    <span className="user_name">{user.name_surname}</span>
+                    <span className="office_name">{user.office_name}</span>
+                  </div>
+                </div>
+                <span className="active_point">{user.active_point}</span>
               </div>
-            </div>
-            <span className="active_point">{user.active_point}</span>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

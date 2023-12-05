@@ -103,11 +103,11 @@ export const history_columns = [
 ];
 
 export const history_filter = (props, page, pageSize) => {
-  return `http://127.0.0.1:8000/data_history`;
+  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/data_history`;
 };
 
 export const user_filter = (props, page, pageSize) => {
-  return `http://127.0.0.1:8000/datas?active_point=${
+  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/datas?active_point=${
     props?.filterData.activePoint
   }&gain_point=${props?.filterData.gainPoint}&page=${
     page + 1
@@ -115,19 +115,19 @@ export const user_filter = (props, page, pageSize) => {
 };
 
 export const office_user_filter = (props, page, pageSize) => {
-  return `http://127.0.0.1:8000/get_by_employee_office/${
+  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/get_by_employee_office/${
     props?.filterData.office_name
   }?page=${page + 1}&size=${pageSize}`;
 };
 
 export const office_filter = (props, page, pageSize) => {
-  return `http://127.0.0.1:8000/offices?office_name=${props?.filterData.map(
+  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/offices?office_name=${props?.filterData.map(
     (office) => office.office_name
   )}&page=${page + 1}&size=${pageSize}`;
 };
 
 export const office_filter_without_paginate = () => {
-  return "http://127.0.0.1:8000/get_office_without_pagination";
+  return "https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/get_office_without_pagination";
 };
 
 export const areaChartPointdata = {

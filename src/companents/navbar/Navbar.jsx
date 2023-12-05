@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 
 // Services
 import GetRandomED from "../../services/GetRandomED";
+
+// Cookies
+import { useCookies } from "react-cookie";
 
 // CSS
 import "./navbar.scss";
 
 function Navbar() {
   const [user, setUser] = useState({});
+  const [, , removeCookie] = useCookies(["Token"]);
 
   useEffect(() => {
     async function fectData() {
-      let getRandomED = new GetRandomED();
-      const response = await getRandomED.get_random_ED();
+      try {
+        let getRandomED = new GetRandomED();
+        const response = await getRandomED.get_random_ED();
 
-      setUser(response.data);
+        setUser(response);
+      } catch (error) {}
     }
     fectData();
   }, []);
+
+  const handleLogout = () => {
+    removeCookie("Token", { path: "/" });
+  };
 
   return (
     <div className="navbar">
@@ -30,9 +39,14 @@ function Navbar() {
 
       <div className="feelHappy">
         <Link to={`/users/${user.employee_id}`}>
-          <img src="/clover.png" alt=""></img>
+          <img src="/clover.svg" alt=""></img>
         </Link>
         <span>Şanslı Hissediyorum!</span>
+      </div>
+
+      <div className="logout">
+        <img onClick={handleLogout} src="/logout.svg" alt=""></img>
+        <span>Logout</span>
       </div>
     </div>
   );

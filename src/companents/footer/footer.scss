@@ -1,6 +1,22 @@
+@import "../../styles/responsive.scss";
+
 .footer {
-    width: 100%;
-    padding: 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+
+    @include sm {
+        display: none;
+    }
+
+    span {
+        &:first-child {
+            font-weight: bold;
+        }
+
+        &:last-child {
+            font-size: 14px;
+        }
+    }
 }

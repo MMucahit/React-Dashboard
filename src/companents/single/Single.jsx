@@ -27,23 +27,27 @@ function Single() {
 
   useEffect(() => {
     async function fectData() {
-      let getShap = new GetShap();
-      const shap_response = await getShap.get_shap(id);
+      try {
+        let getShap = new GetShap();
+        const shap_response = await getShap.get_shap(id);
 
-      let getByEmployeeId = new GetByEmployeeId();
-      const user_response = await getByEmployeeId.get_by_employee_id(id);
+        setShap(shap_response);
+      } catch (error) {}
 
-      setUser(user_response.data);
-      setShap(shap_response.data);
+      try {
+        let getByEmployeeId = new GetByEmployeeId();
+        const user_response = await getByEmployeeId.get_by_employee_id(id);
+
+        setUser(user_response);
+      } catch (error) {}
     }
     fectData();
   }, [id]);
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload; // Tooltip'un üzerine geldiğiniz veriyi alın
+      const data = payload[0].payload;
 
-      // Burada API'den gelen veriyi kullanarak istediğiniz şekilde bir içerik oluşturun
       const tooltipContent = (
         <div>
           <p>Value: {data.feature_values}</p>
@@ -101,7 +105,7 @@ function Single() {
         </div>
       </div>
       <div className="chart">
-        <ResponsiveContainer>
+        <ResponsiveContainer width="99%" height="100%">
           <LineChart
             layout="vertical"
             data={shap}
@@ -113,8 +117,12 @@ function Single() {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" />
-            <YAxis dataKey="feature_names" type="category" />
+            <XAxis type="number" tick={{ fill: "white" }} />
+            <YAxis
+              dataKey="feature_names"
+              type="category"
+              tick={{ fill: "white" }}
+            />
             <Tooltip content={<CustomTooltip />} />
             <Line dataKey="values" stroke="#8884d8" />
           </LineChart>

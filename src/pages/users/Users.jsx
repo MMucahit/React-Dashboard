@@ -12,6 +12,7 @@ import { user_columns } from "../../data";
 
 // CSS
 import "./users.scss";
+import { Box } from "@mui/material";
 
 function Users() {
   const [activePointFilterValue, setActivePointFilterValue] = useState("");
@@ -19,17 +20,29 @@ function Users() {
 
   return (
     <div className="users">
-      <div className="dataGrid">
-        <UserDataTable
-          slug="users"
-          columns={user_columns}
-          filter={user_filter}
-          filterData={{
-            activePoint: activePointFilterValue,
-            gainPoint: gainPointFilterValue,
-          }}
-        />
-      </div>
+      <Box
+        sx={{
+          height: "100%",
+          width: "99%",
+          "& .css-t89xny-MuiDataGrid-columnHeaderTitle": {
+            fontSize: "larger",
+            color: "black",
+          },
+        }}
+      >
+        <div className="dataGrid">
+          <UserDataTable
+            slug="users"
+            columns={user_columns}
+            filter={user_filter}
+            filterData={{
+              activePoint: activePointFilterValue,
+              gainPoint: gainPointFilterValue,
+            }}
+          />
+        </div>
+      </Box>
+
       <div className="dataFilter">
         <SelectBox
           filterValue={activePointFilterValue}

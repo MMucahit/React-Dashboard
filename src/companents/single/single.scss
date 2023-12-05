@@ -1,5 +1,12 @@
+@import "../../styles/responsive.scss";
+
 .single {
     display: flex;
+
+    @include xxl {
+        flex-direction: column;
+        gap: 50px;
+    }
     .view {
         flex: 1;
         .info {
@@ -7,10 +14,6 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
-
-                buttun {
-                    border-radius: 5px;
-                }
 
                 img {
                     width: 100px;
@@ -67,6 +70,10 @@
                         padding: 15px;
                         background-color: #f45b6810;
 
+                        @include md {
+                            min-width: 250px;
+                        }
+
                         p {
                             margin-bottom: 5px;
                         }
@@ -87,14 +94,24 @@
         align-items: center;
 
         margin-top: 50px;
-        width: 90%;
-        height: 700px;
+        width: 80%;
+        height: 650px;
         margin: 20px 0px;
+
+        @include sm {
+            flex: none;
+            margin-top: 10px;
+            width: 100%;
+        }
     }
 
     hr {
         width: 90%;
         height: 0;
         border: 0.5px solid gray;
+
+        @include md {
+            display: none;
+        }
     }
 }

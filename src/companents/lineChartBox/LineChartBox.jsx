@@ -17,7 +17,7 @@ function LineChartBox(props) {
         </div>
         <h1>{props.number}</h1>
         <Link to="/" style={{ color: props.color }}>
-          Wiew all
+          View all
         </Link>
       </div>
       <div className="chartInfo">

@@ -4,6 +4,13 @@ import { Link } from "react-router-dom";
 // MUI Data Grid
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
+// MUI Alert
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+
+// Cookie
+import { useCookies } from "react-cookie";
+
 // CSS
 import "./officeDataTable.scss";
 
@@ -14,15 +21,47 @@ function OfficeDataTable(props) {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
 
+  const [fetch_error_open, fetchErrorSetOpen] = useState(false);
+
+  const [cookie] = useCookies(["Token"]);
+
+  const fetch_error_handleClick = () => {
+    fetchErrorSetOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    fetchErrorSetOpen(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await fetch(props.filter(props, page, pageSize));
-      const json = await response.json();
 
-      setRow(json.items);
-      setTotalRow(json.total);
-      setIsLoading(false);
+      try {
+        const response = await fetch(props.filter(props, page, pageSize), {
+          headers: {
+            Authorization: "Bearer ".concat(cookie.Token.access_token),
+          },
+        });
+        const json = await response.json();
+
+        fetchErrorSetOpen(false);
+
+        if (!response.ok) {
+          // Eğer response.ok false ise, bir hata oluşmuştur.
+          fetch_error_handleClick();
+        }
+        setRow(json.items);
+        setTotalRow(json.total);
+      } catch (error) {
+        fetch_error_handleClick();
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [page, pageSize, props]);
@@ -45,12 +84,7 @@ function OfficeDataTable(props) {
   return (
     <div className="dataTable">
       <DataGrid
-        sx={{
-          "& .css-t89xny-MuiDataGrid-columnHeaderTitle": {
-            fontSize: "larger",
-            color: "black",
-          },
-        }}
+        autoHeight
         loading={isLoading}
         className="dataGrid"
         rows={row}
@@ -82,6 +116,16 @@ function OfficeDataTable(props) {
           },
         }}
       />
+
+      <Snackbar
+        open={fetch_error_open}
+        autoHideDuration={10000}
+        onClose={fetch_error_handleClick}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Something Wrong While Fetching Data!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

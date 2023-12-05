@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 // MUI Data Grid
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
+// Cookie
+import { useCookies } from "react-cookie";
+
 // MUI Alert
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
@@ -21,15 +24,12 @@ function FavoriteDataTable(props) {
   const [pageSize, setPageSize] = useState(10);
 
   const [open, setOpen] = useState(false);
+  const [fetch_error_open, fetchErrorSetOpen] = useState(false);
 
-  const fetchData = async () => {
-    setIsLoading(true);
-    const response = await fetch(props.filter(props, page, pageSize));
-    const json = await response.json();
+  const [cookie] = useCookies(["Token"]);
 
-    setRow(json.items);
-    setTotalRow(json.total);
-    setIsLoading(false);
+  const fetch_error_handleClick = () => {
+    fetchErrorSetOpen(true);
   };
 
   const handleClick = () => {
@@ -42,6 +42,32 @@ function FavoriteDataTable(props) {
     }
 
     setOpen(false);
+    fetchErrorSetOpen(false);
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(props.filter(props, page, pageSize), {
+        headers: { Authorization: "Bearer ".concat(cookie.Token.access_token) },
+      });
+      const json = await response.json();
+
+      fetchErrorSetOpen(false);
+
+      if (!response.ok) {
+        // Eğer response.ok false ise, bir hata oluşmuştur.
+        fetch_error_handleClick();
+      }
+
+      setRow(json.items);
+      setTotalRow(json.total);
+    } catch (error) {
+      fetch_error_handleClick();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -51,11 +77,23 @@ function FavoriteDataTable(props) {
   const delete_history = async (employee_id) => {
     setIsLoading(true);
 
-    let deleteHistory = new DeleteHistory();
-    await deleteHistory.delete_history(employee_id);
+    try {
+      let deleteHistory = new DeleteHistory();
+      const response = await deleteHistory.delete_history(employee_id);
 
-    fetchData();
-    handleClick();
+      fetchErrorSetOpen(false);
+
+      if (!response) {
+        fetch_error_handleClick();
+      }
+
+      fetchData();
+      handleClick();
+    } catch (error) {
+      fetch_error_handleClick();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isCloseColumn = {
@@ -113,12 +151,6 @@ function FavoriteDataTable(props) {
     <div className="dataTable">
       <DataGrid
         autoHeight
-        sx={{
-          "& .css-t89xny-MuiDataGrid-columnHeaderTitle": {
-            fontSize: "larger",
-            color: "black",
-          },
-        }}
         loading={isLoading}
         className="dataGrid"
         rows={row}
@@ -150,6 +182,15 @@ function FavoriteDataTable(props) {
           },
         }}
       />
+      <Snackbar
+        open={fetch_error_open}
+        autoHideDuration={10000}
+        onClose={fetch_error_handleClick}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Something Wrong!
+        </Alert>
+      </Snackbar>
       <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           User Deleted!

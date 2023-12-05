@@ -7,32 +7,44 @@
         flex-direction: column;
         gap: 10px;
         margin-bottom: 20px;
-    }
 
-    .title {
-        font-size: 12px;
-        font-weight: 200;
-        color: $soft-color;
-
-        @include lg {
-            display: none;
-        }
-    }
-
-    .listItem {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px;
-        border-radius: 5px;
-
-        &:hover {
-            background-color: $soft-bg;
+        @include sm {
+            flex-direction: row;
         }
 
-        .listItemTitle {
+        .title {
+            font-size: 12px;
+            font-weight: 200;
+            color: $soft-color;
+            text-transform: uppercase;
+
             @include lg {
                 display: none;
+            }
+        }
+
+        .listItem {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 5px;
+
+            img {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            &:hover {
+                background-color: $soft-bg;
+            }
+
+            .listItemTitle {
+                @include lg {
+                    display: none;
+                }
             }
         }
     }

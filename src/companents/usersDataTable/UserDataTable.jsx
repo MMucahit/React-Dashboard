@@ -8,6 +8,9 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+// Cookie
+import { useCookies } from "react-cookie";
+
 // Services
 import AddHistory from "../../services/AddHistory";
 
@@ -23,6 +26,9 @@ function UserDataTable(props) {
 
   const [error_open, errorSetOpen] = useState(false);
   const [success_open, successSetOpen] = useState(false);
+  const [fetch_error_open, fetchErrorSetOpen] = useState(false);
+
+  const [cookie] = useCookies(["Token"]);
 
   const success_handleClick = () => {
     successSetOpen(true);
@@ -32,6 +38,10 @@ function UserDataTable(props) {
     errorSetOpen(true);
   };
 
+  const fetch_error_handleClick = () => {
+    fetchErrorSetOpen(true);
+  };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -39,17 +49,35 @@ function UserDataTable(props) {
 
     successSetOpen(false);
     errorSetOpen(false);
+    fetchErrorSetOpen(false);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const response = await fetch(props.filter(props, page, pageSize));
-      const json = await response.json();
 
-      setRow(json.items);
-      setTotalRow(json.total);
-      setIsLoading(false);
+      try {
+        const response = await fetch(props.filter(props, page, pageSize), {
+          headers: {
+            Authorization: "Bearer ".concat(cookie.Token.access_token),
+          },
+        });
+        const json = await response.json();
+
+        fetchErrorSetOpen(false);
+
+        if (!response.ok) {
+          // Eğer response.ok false ise, bir hata oluşmuştur.
+          fetch_error_handleClick();
+        }
+
+        setRow(json.items);
+        setTotalRow(json.total);
+      } catch (error) {
+        fetch_error_handleClick();
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, [page, pageSize, props]);
@@ -57,12 +85,20 @@ function UserDataTable(props) {
   const add_history = async (employee_id) => {
     setIsLoading(true);
 
-    let addHistory = new AddHistory();
-    const response = await addHistory.add_history(employee_id);
+    try {
+      let addHistory = new AddHistory();
+      const response = await addHistory.add_history(employee_id);
 
-    response.ok ? success_handleClick() : error_handleClick();
+      if (!response) {
+        fetch_error_handleClick();
+      }
 
-    setIsLoading(false);
+      response.ok ? success_handleClick() : error_handleClick();
+    } catch (error) {
+      fetch_error_handleClick();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isCloseColumn = {
@@ -124,12 +160,7 @@ function UserDataTable(props) {
   return (
     <div className="dataTable">
       <DataGrid
-        sx={{
-          "& .css-t89xny-MuiDataGrid-columnHeaderTitle": {
-            fontSize: "larger",
-            color: "black",
-          },
-        }}
+        autoHeight
         loading={isLoading}
         className="dataGrid"
         rows={row}
@@ -161,6 +192,15 @@ function UserDataTable(props) {
           },
         }}
       />
+      <Snackbar
+        open={fetch_error_open}
+        autoHideDuration={10000}
+        onClose={fetch_error_handleClick}
+      >
+        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
+          Something Wrong!
+        </Alert>
+      </Snackbar>
       <Snackbar open={error_open} autoHideDuration={1000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
           User already in Favorite!
