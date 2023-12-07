@@ -46,7 +46,6 @@ function Navbar() {
 
       <div className="logout">
         <img onClick={handleLogout} src="/logout.svg" alt=""></img>
-        <span>Logout</span>
       </div>
     </div>
   );

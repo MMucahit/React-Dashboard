@@ -9,6 +9,7 @@ import { user_filter } from "../../data";
 
 // Columns
 import { user_columns } from "../../data";
+import { user_columns_mobile } from "../../data";
 
 // CSS
 import "./users.scss";
@@ -33,7 +34,7 @@ function Users() {
         <div className="dataGrid">
           <UserDataTable
             slug="users"
-            columns={user_columns}
+            columns={{ user: user_columns, user_mobile: user_columns_mobile }}
             filter={user_filter}
             filterData={{
               activePoint: activePointFilterValue,

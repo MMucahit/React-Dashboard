@@ -7,9 +7,9 @@ import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import "./pieChartBox.scss";
 
 const data = [
-  { name: "Desteğe İhtiyacı Var", value: 3307, color: "#0088FE" },
-  { name: "Herşey Yolunda", value: 3574, color: "#00C49F" },
-  { name: "Nötr", value: 1273, color: "#FFBB28" },
+  { name: "Desteğe İhtiyacı Var", value: 325, color: "#0088FE" },
+  { name: "Herşey Yolunda", value: 3861, color: "#00C49F" },
+  { name: "Nötr", value: 532, color: "#FFBB28" },
 ];
 
 function PieChartBox() {

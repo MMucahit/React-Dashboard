@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // MUI Data Grid
@@ -23,6 +23,7 @@ function UserDataTable(props) {
   const [totalRow, setTotalRow] = useState(0);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [resize, setResize] = useState(0);
 
   const [error_open, errorSetOpen] = useState(false);
   const [success_open, successSetOpen] = useState(false);
@@ -52,9 +53,16 @@ function UserDataTable(props) {
     fetchErrorSetOpen(false);
   };
 
+  const handleResize = useCallback(() => {
+    return window.innerWidth <= 480
+      ? [...props.columns.user_mobile, actionColumn]
+      : [...props.columns.user, isNewColumn, isCloseColumn, actionColumn];
+  });
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      setResize(window.innerWidth);
 
       try {
         const response = await fetch(props.filter(props, page, pageSize), {
@@ -80,7 +88,7 @@ function UserDataTable(props) {
       }
     };
     fetchData();
-  }, [page, pageSize, props]);
+  }, [page, pageSize, cookie, resize, props]);
 
   const add_history = async (employee_id) => {
     setIsLoading(true);
@@ -157,6 +165,24 @@ function UserDataTable(props) {
     },
   };
 
+  useEffect(() => {
+    // Ekran boyutu değiştiğinde DataGrid'i güncelle
+    const handleWindowResize = () => {
+      // handleResize fonksiyonunu çağırarak kolon yapılandırmasını güncelle
+      handleResize();
+      // DataGrid'i güncelle
+      setResize(window.innerWidth);
+    };
+
+    // Event listener'ı ekleyerek ekran boyutu değişikliklerini dinle
+    window.addEventListener("resize", handleWindowResize);
+
+    // Component unmount olduğunda event listener'ı kaldır
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [handleResize]);
+
   return (
     <div className="dataTable">
       <DataGrid
@@ -164,7 +190,7 @@ function UserDataTable(props) {
         loading={isLoading}
         className="dataGrid"
         rows={row}
-        columns={[...props.columns, isNewColumn, isCloseColumn, actionColumn]}
+        columns={handleResize()}
         rowCount={totalRow}
         paginationMode="server"
         initialState={{

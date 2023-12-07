@@ -9,6 +9,7 @@ import { office_user_filter } from "../../data";
 
 // Columns
 import { user_columns } from "../../data";
+import { user_columns_mobile } from "../../data";
 
 // MUI
 import { Box } from "@mui/material";
@@ -34,7 +35,7 @@ function OfficeUser() {
         <div className="dataGrid">
           <UserDataTable
             slug="users"
-            columns={user_columns}
+            columns={{ user: user_columns, user_mobile: user_columns_mobile }}
             filter={office_user_filter}
             filterData={{
               office_name: office_name,

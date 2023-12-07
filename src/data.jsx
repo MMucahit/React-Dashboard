@@ -31,6 +31,24 @@ export const user_columns = [
   },
 ];
 
+export const user_columns_mobile = [
+  {
+    field: "name_surname",
+    headerName: "Adı Soyadı",
+    width: 180,
+  },
+  {
+    field: "office_name",
+    headerName: "Ofis Adı",
+    width: 120,
+  },
+  {
+    field: "active_point",
+    headerName: "Aktiflik Puanı",
+    width: 150,
+  },
+];
+
 export const office_columns = [
   {
     field: "id",
@@ -142,58 +160,37 @@ export const areaChartPointdata = {
   ],
   chartData: [
     {
-      name: "2023-05-11",
-      A: 2409,
-      B: 1328,
-      C: 878,
-      D: 920,
-      E: 2619,
+      name: "14-11-2023",
+      A: 1856,
+      B: 1311,
+      C: 636,
+      D: 323,
+      E: 60,
     },
     {
-      name: "2023-12-11",
-      A: 1931,
-      B: 1643,
-      C: 1273,
-      D: 1337,
-      E: 1970,
+      name: "19-11-2023",
+      A: 2079,
+      B: 1250,
+      C: 532,
+      D: 260,
+      E: 65,
     },
     {
-      name: "2023-19-11",
-      A: 2556,
-      B: 1218,
-      C: 970,
-      D: 1089,
-      E: 2615,
+      name: "26-11-2023",
+      A: 1792,
+      B: 1382,
+      C: 653,
+      D: 295,
+      E: 64,
     },
-  ],
-};
 
-export const areaChartGaindata = {
-  title: "A - B - C",
-  position: { x: 310, y: -80 },
-  dataKeyColor: [
-    { color: "#7743DB", key: "A" },
-    { color: "#D67BFF", key: "B" },
-    { color: "#FFB6D9", key: "C" },
-  ],
-  chartData: [
     {
-      name: "2023-05-11",
-      A: 2409,
-      B: 1328,
-      C: 878,
-    },
-    {
-      name: "2023-12-11",
-      A: 1931,
-      B: 1643,
-      C: 1273,
-    },
-    {
-      name: "2023-19-11",
-      A: 1538,
-      B: 2003,
-      C: 645,
+      name: "03-12-2023",
+      A: 2079,
+      B: 1250,
+      C: 532,
+      D: 260,
+      E: 65,
     },
   ],
 };
@@ -202,13 +199,14 @@ export const chartBoxDE = {
   color: "teal",
   icon: "/revenueIcon.svg",
   title: "Toplam D-E Kullanıcı Sayısı",
-  number: 3704,
+  number: 325,
   dataKey: "value",
-  percentage: (((3704 - 3307) / 3307) * 100).toPrecision(2),
+  percentage: (((325 - 359) / 359) * 100).toPrecision(2), // (son - (son - 1) / (son - 1) * 100)
   chartData: [
-    { name: "2023-05-11", value: 3539 },
-    { name: "2023-12-11", value: 3307 },
-    { name: "2023-19-11", value: 3704 },
+    { name: "14-11-2023", value: 383 },
+    { name: "19-11-2023", value: 325 },
+    { name: "26-11-2023", value: 359 },
+    { name: "03-12-2023", value: 325 },
   ],
 };
 
@@ -216,101 +214,13 @@ export const chartBoxABC = {
   color: "gold",
   icon: "/conversionIcon.svg",
   title: "Toplam A-B-C Kullanıcı Sayısı",
-  number: 4744,
+  number: 3861,
   dataKey: "value",
-  percentage: (((4744 - 4847) / 4847) * 100).toPrecision(2),
+  percentage: (((3861 - 3827) / 3827) * 100).toPrecision(2), // (son - (son - 1) / (son - 1) * 100)
   chartData: [
-    { name: "Sun", value: 4615 },
-    { name: "Mon", value: 4847 },
-    { name: "Mon", value: 4744 },
-  ],
-};
-
-export const barChartBoxED = {
-  title: "Bölgelere Göre D-E",
-  color: "#FF8042",
-  dataKeyColor: [
-    { color: "#8470ff", key: "D" },
-    { color: "#54ff9f", key: "E" },
-  ],
-  chartData: [
-    {
-      name: "1",
-      D: 509,
-      E: 714,
-    },
-    {
-      name: "2",
-      D: 262,
-      E: 389,
-    },
-    {
-      name: "3",
-      D: 208,
-      E: 265,
-    },
-    {
-      name: "4",
-      D: 188,
-      E: 325,
-    },
-    {
-      name: "5",
-      D: 119,
-      E: 218,
-    },
-    {
-      name: "6",
-      D: 51,
-      E: 59,
-    },
-  ],
-};
-
-export const barChartBoxABC = {
-  title: "Bölgelere Göre A-B-C",
-  color: "#FF8042",
-  dataKeyColor: [
-    { color: "#8470ff", key: "A" },
-    { color: "#54ff9f", key: "B" },
-    { color: "#00688b", key: "C" },
-  ],
-  chartData: [
-    {
-      name: "1",
-      A: 617,
-      B: 542,
-      C: 468,
-    },
-    {
-      name: "2",
-      A: 361,
-      B: 278,
-      C: 218,
-    },
-    {
-      name: "3",
-      A: 346,
-      B: 291,
-      C: 226,
-    },
-    {
-      name: "4",
-      A: 237,
-      B: 282,
-      C: 189,
-    },
-    {
-      name: "5",
-      A: 154,
-      B: 155,
-      C: 105,
-    },
-    {
-      name: "6",
-      A: 216,
-      B: 95,
-      C: 67,
-    },
+    { name: "14-11-2023", value: 3803 },
+    { name: "19-11-2023", value: 3861 },
+    { name: "26-11-2023", value: 3827 },
+    { name: "03-12-2023", value: 3861 },
   ],
 };
