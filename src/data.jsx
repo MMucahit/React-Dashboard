@@ -197,7 +197,6 @@ export const areaChartPointdata = {
 
 export const chartBoxDE = {
   color: "teal",
-  icon: "/revenueIcon.svg",
   title: "Toplam D-E Kullanıcı Sayısı",
   number: 325,
   dataKey: "value",
@@ -212,7 +211,6 @@ export const chartBoxDE = {
 
 export const chartBoxABC = {
   color: "gold",
-  icon: "/conversionIcon.svg",
   title: "Toplam A-B-C Kullanıcı Sayısı",
   number: 3861,
   dataKey: "value",
