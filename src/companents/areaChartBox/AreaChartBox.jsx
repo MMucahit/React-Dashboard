@@ -22,7 +22,7 @@ function AreaChartBox(props) {
           <span>{props.title}</span>
         </div>
         <div className="chart">
-          <ResponsiveContainer width="99%" height="100%">
+          <ResponsiveContainer width="99%" height={350}>
             <AreaChart
               data={props.chartData}
               margin={{

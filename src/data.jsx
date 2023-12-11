@@ -120,32 +120,58 @@ export const history_columns = [
   },
 ];
 
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+
 export const history_filter = (props, page, pageSize) => {
-  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/data_history`;
+  return REACT_APP_API_URL.concat(`data_history`);
+};
+
+export const user_DE = (props, page, pageSize) => {
+  return REACT_APP_API_URL.concat(`get_DE?page=${page + 1}&size=${pageSize}`);
+};
+
+export const user_AB = (props, page, pageSize) => {
+  return REACT_APP_API_URL.concat(`get_AB?page=${page + 1}&size=${pageSize}`);
+};
+
+export const user_C = (props, page, pageSize) => {
+  return REACT_APP_API_URL.concat(`get_C?page=${page + 1}&size=${pageSize}`);
 };
 
 export const user_filter = (props, page, pageSize) => {
-  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/datas?active_point=${
-    props?.filterData.activePoint
-  }&gain_point=${props?.filterData.gainPoint}&page=${
-    page + 1
-  }&size=${pageSize}`;
+  return REACT_APP_API_URL.concat(
+    `datas?active_point=${props?.filterData.activePoint}&gain_point=${
+      props?.filterData.gainPoint
+    }&page=${page + 1}&size=${pageSize}`
+  );
 };
 
 export const office_user_filter = (props, page, pageSize) => {
-  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/get_by_employee_office/${
-    props?.filterData.office_name
-  }?page=${page + 1}&size=${pageSize}`;
+  return REACT_APP_API_URL.concat(
+    `get_by_employee_office/${props?.filterData.office_name}?page=${
+      page + 1
+    }&size=${pageSize}`
+  );
 };
 
 export const office_filter = (props, page, pageSize) => {
-  return `https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/offices?office_name=${props?.filterData.map(
-    (office) => office.office_name
-  )}&page=${page + 1}&size=${pageSize}`;
+  return REACT_APP_API_URL.concat(
+    `offices?office_name=${props?.filterData.map(
+      (office) => office.office_name
+    )}&page=${page + 1}&size=${pageSize}`
+  );
+};
+
+export const office_percentage_filter = (props, page, pageSize) => {
+  return REACT_APP_API_URL.concat(
+    `get_percentage?office_name=${props?.filterData.map(
+      (office) => office.office_name
+    )}&page=${page + 1}&size=${pageSize}`
+  );
 };
 
 export const office_filter_without_paginate = () => {
-  return "https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/get_office_without_pagination";
+  return REACT_APP_API_URL.concat("get_office_without_pagination");
 };
 
 export const areaChartPointdata = {

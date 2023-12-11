@@ -12,6 +12,10 @@ import {
   YAxis,
 } from "recharts";
 
+// MUI
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+
 // Services
 import GetShap from "../../services/GetShap";
 import GetByEmployeeId from "../../services/GetByEmployeeId";
@@ -66,7 +70,9 @@ function Single() {
         <div className="info">
           <div className="topInfo">
             <img src="/user.svg" alt=""></img>
-            <h1>{user.name_surname}</h1>
+            <h1>
+              {user.name_surname} - {user.office_name}
+            </h1>
           </div>
           <div className="details">
             <div className="item">
@@ -85,10 +91,6 @@ function Single() {
               <span className="itemTitle">Gain Point:</span>
               <span className="itemValue">{user.gain_point}</span>
             </div>
-            <div className="item">
-              <span className="itemTitle">Office Name:</span>
-              <span className="itemValue">{user.office_name}</span>
-            </div>
           </div>
         </div>
         <hr />
@@ -105,28 +107,34 @@ function Single() {
         </div>
       </div>
       <div className="chart">
-        <ResponsiveContainer width="99%" height="100%">
-          <LineChart
-            layout="vertical"
-            data={shap}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" tick={{ fill: "white" }} />
-            <YAxis
-              dataKey="feature_names"
-              type="category"
-              tick={{ fill: "white" }}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Line dataKey="values" stroke="#8884d8" />
-          </LineChart>
-        </ResponsiveContainer>
+        {shap.length !== 0 ? (
+          <ResponsiveContainer width="99%" height="100%">
+            <LineChart
+              layout="vertical"
+              data={shap}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" tick={{ fill: "white" }} />
+              <YAxis
+                dataKey="feature_names"
+                type="category"
+                tick={{ fill: "white" }}
+              />
+              <Tooltip content={<CustomTooltip />} />
+              <Line dataKey="values" stroke="#8884d8" />
+            </LineChart>
+          </ResponsiveContainer>
+        ) : (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        )}
       </div>
     </div>
   );

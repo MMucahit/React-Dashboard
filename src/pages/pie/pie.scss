@@ -1,0 +1,9 @@
+.pie {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    .dataGrid {
+        flex-grow: 1;
+    }
+}

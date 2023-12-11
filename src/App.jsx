@@ -23,8 +23,14 @@ import Navbar from "./companents/navbar/Navbar";
 import Footer from "./companents/footer/Footer";
 import Menu from "./companents/menu/Menu";
 
+// Filter
+import { user_AB } from "./data";
+import { user_DE } from "./data";
+import { user_C } from "./data";
+
 // CSS
 import "./styles/global.scss";
+import Pie from "./pages/pie/Pie";
 
 function App() {
   const [cookie] = useCookies(["Token"]);
@@ -61,6 +67,18 @@ function App() {
         {
           path: "/favorites",
           element: <PrivateRoute element={<Favorites />} />,
+        },
+        {
+          path: "/AB",
+          element: <PrivateRoute element={<Pie filter={user_AB} />} />,
+        },
+        {
+          path: "/DE",
+          element: <PrivateRoute element={<Pie filter={user_DE} />} />,
+        },
+        {
+          path: "/C",
+          element: <PrivateRoute element={<Pie filter={user_C} />} />,
         },
         { path: "/users/:id", element: <PrivateRoute element={<User />} /> },
         {

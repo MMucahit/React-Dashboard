@@ -12,11 +12,13 @@ function TopBox() {
 
   const [cookie] = useCookies(["Token"]);
 
+  const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://fastapi-app-async-ftqcb6wz6q-uc.a.run.app/get_random_seven",
+          REACT_APP_API_URL.concat("get_random_seven"),
           {
             headers: {
               Authorization: "Bearer ".concat(cookie.Token.access_token),

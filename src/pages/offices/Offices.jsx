@@ -8,10 +8,13 @@ import { office_columns } from "../../data";
 
 // Filter
 import { office_filter } from "../../data";
+import { office_percentage_filter } from "../../data";
 import { office_filter_without_paginate } from "../../data";
 
 // MUI
 import AutoComplete from "../../companents/autoComplete/AutoComplete";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 // CSS
 import "./offices.scss";
@@ -19,6 +22,27 @@ import { Box } from "@mui/material";
 
 function Offices() {
   const [officeFilterValue, setOfficeFilterValue] = useState([]);
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleFilter = () => {
+    if (checked) {
+      return office_percentage_filter;
+    }
+
+    return office_filter;
+  };
+
+  const handleType = () => {
+    if (checked) {
+      return "Percentage";
+    }
+
+    return "Number";
+  };
 
   return (
     <div className="offices">
@@ -36,7 +60,7 @@ function Offices() {
           <OfficeDataTable
             slug="offices"
             columns={office_columns}
-            filter={office_filter}
+            filter={handleFilter()}
             filterData={officeFilterValue}
           />
         </div>
@@ -44,6 +68,19 @@ function Offices() {
 
       <div className="dataFilter">
         <div>
+          <div className="dataSwitch">
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={checked}
+                  onChange={handleChange}
+                  name="Percentage"
+                />
+              }
+              label={handleType()}
+            />
+          </div>
+
           <AutoComplete
             filter={office_filter_without_paginate}
             setfilterValue={setOfficeFilterValue}

@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 // ReCharts
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
@@ -13,6 +14,18 @@ const data = [
 ];
 
 function PieChartBox() {
+  const navigate = useNavigate();
+
+  const handleClick = (entry) => {
+    if (entry.name === "Herşey Yolunda") {
+      navigate("/AB");
+    } else if (entry.name === "Nötr") {
+      navigate("/C");
+    } else {
+      navigate("/DE");
+    }
+  };
+
   return (
     <div className="pieChartBox">
       <h1>Ayrılık İhtimal Dağılımı</h1>
@@ -28,6 +41,7 @@ function PieChartBox() {
               outerRadius={"90%"}
               paddingAngle={5}
               dataKey="value"
+              onClick={handleClick}
             >
               {data.map((item) => (
                 <Cell key={item.name} fill={item.color} />

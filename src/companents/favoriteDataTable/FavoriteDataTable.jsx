@@ -52,6 +52,7 @@ function FavoriteDataTable(props) {
       const response = await fetch(props.filter(props, page, pageSize), {
         headers: { Authorization: "Bearer ".concat(cookie.Token.access_token) },
       });
+
       const json = await response.json();
 
       fetchErrorSetOpen(false);
