@@ -70,6 +70,7 @@ function UserDataTable(props) {
             Authorization: "Bearer ".concat(cookie.Token.access_token),
           },
         });
+
         const json = await response.json();
 
         fetchErrorSetOpen(false);
@@ -77,10 +78,10 @@ function UserDataTable(props) {
         if (!response.ok) {
           // Eğer response.ok false ise, bir hata oluşmuştur.
           fetch_error_handleClick();
+        } else {
+          setRow(json.items);
+          setTotalRow(json.total);
         }
-
-        setRow(json.items);
-        setTotalRow(json.total);
       } catch (error) {
         fetch_error_handleClick();
       } finally {
@@ -88,7 +89,7 @@ function UserDataTable(props) {
       }
     };
     fetchData();
-  }, [page, pageSize, cookie, resize, props]);
+  }, [page, pageSize, cookie, props]);
 
   const add_history = async (employee_id) => {
     setIsLoading(true);

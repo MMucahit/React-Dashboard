@@ -64,7 +64,7 @@ function OfficeDataTable(props) {
       }
     };
     fetchData();
-  }, [page, pageSize, props]);
+  }, [page, pageSize, cookie.Token.access_token, props]);
 
   const actionColumn = {
     field: "action",
